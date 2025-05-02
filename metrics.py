@@ -3,7 +3,7 @@ import ast
 from typing import List, Dict
 from fuzzywuzzy import fuzz
 from data_config import IO_PATH
-from data_handler import save_data
+from data_handler import load_data, save_data
 import re
 
 
@@ -99,7 +99,7 @@ def find_best_threshold(df: pd.DataFrame, thresholds: List[float]) -> tuple[floa
 
 
 if __name__ == "__main__":
-    df = pd.read_csv(IO_PATH, encoding="ISO-8859-1")
+    df = load_data(IO_PATH)
     thresholds = [0.7, 0.8, 0.85, 0.9, 0.95]
     best_threshold, best_metrics = find_best_threshold(df.copy(), thresholds)
 
