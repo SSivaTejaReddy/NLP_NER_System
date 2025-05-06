@@ -17,19 +17,31 @@ class NER_LLM:
         
         self.client = Groq(api_key=api_key)
         self.model_name = model_name  
-        self.groq_api_task = "ner"  # NER task to extract the ORG from the sentence
 
     def ner_recog(self, text):
         try:
             prompt = f"""
-            Extract all organization/company names (ORGs) from this text.
-            Ensuring that any unusual or non-standard characters (like encoding issues or special symbols) are not ignored 
-            Return ONLY a comma-separated list of names. No explanations.
+            Think as an helpful assistance, and ectract the Organization name form the text.
+            Below are the examples with their relevant text and organizations.
+            Do not add any other text apart form organization name in the column.
+           
+            Examples:
+            Text: How much revenue does KSM Castings Group GmbH generate?
+            Organizations: ['KSM Castings Group GmbH']
+
+
+            Text: What are the total earnings ofbouygues-es.co.uk?
+            Organizations: ['BYES SOLAR UK LIMITED']
+
+
+            Text: How much money does landrysseafood.com make?
+            Organizations: ["Landry's Seafood Kemah", 'Inc.']
+
+
             Text: {text}
-            
+           
             Organizations:
-            """
-            
+            """  
             response = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],
                 model=self.model_name,
