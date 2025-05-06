@@ -7,9 +7,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from data_config import IO_PATH
 from data_handler import load_data, save_data
 
-from transformers import pipeline
-
-
 class NER_Transformer:
     def __init__(self, model_name="Jean-Baptiste/roberta-large-ner-english"):
         self.ner_pipeline = pipeline(
